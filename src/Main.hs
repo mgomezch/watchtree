@@ -30,13 +30,13 @@ import Control.Monad.Trans.Resource    (allocate, runResourceT)
 import Control.Monad.Unicode           ((≫=), (≫))
 import Crypto.Conduit                  (hashFile)
 import Crypto.Hash.CryptoAPI           (SHA1)
-import Data.Aeson.TH                   (deriveJSON)
+import Data.Aeson.TH                   (deriveJSON, defaultOptions)
 import Data.Bool                       (Bool(True, False))
 import Data.ByteString                 (ByteString)
 import Data.ByteString.Char8           (readFile, unpack)
 import Data.Data                       (Data)
 import Data.Either                     (either)
-import Data.Function                   (($), flip, id)
+import Data.Function                   (($), flip)
 import Data.Function.Unicode           ((∘))
 import Data.Functor                    ((<$>), Functor)
 import Data.List                       (concat)
@@ -104,7 +104,7 @@ File
 
 data Rules = Rules { rules ∷ [Rule] }
 data Rule = Rule { name, pattern, command ∷ String }
-concat <$> mapM (deriveJSON id) [''Rules, ''Rule]
+concat <$> mapM (deriveJSON defaultOptions) [''Rules, ''Rule]
 
 eventNew ∷ ActionPredicate
 eventNew event = case event of
